@@ -1,8 +1,14 @@
 import React from 'react';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
+import { connect } from 'react-redux';
 
-function Navbar() {
+function Navbar(props) {
+  console.log(props);
+  const token = props.auth.signedUserToken;
+  let links;
+  if (token) links = <SignedInLinks />;
+  else links = <SignedOutLinks />;
   return (
     <nav>
       <div className='nav-wrapper green lighten-1'>
@@ -12,13 +18,16 @@ function Navbar() {
               Odinbook
             </a>
           </div>
-          <div className='col offset-l2'>
-            <SignedOutLinks />
-          </div>
+          <div className='col offset-l2'>{links}</div>
         </div>
       </div>
     </nav>
   );
 }
 
-export default Navbar;
+const mapStateTpProps = (state) => {
+  return {
+    ...state,
+  };
+};
+export default connect(mapStateTpProps)(Navbar);

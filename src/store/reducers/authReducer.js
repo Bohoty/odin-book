@@ -1,8 +1,10 @@
 const initState = {
-  signedUserName: 'مهندس جلال الطوخي(عضوي طويل)',
-  signedUserId: '69',
-  signedUserToken: '5555555555555555555555555555',
-  signedUserEmail: 'GalalEltoo5y@zeby.kosomk',
+  signedUserName: '',
+  signedUserId: '',
+  signedUserToken: null,
+  signedUserEmail: '',
+  signInError: null,
+  signUpError: null,
 };
 const authReducer = (state = initState, action) => {
   switch (action.type) {
@@ -12,10 +14,30 @@ const authReducer = (state = initState, action) => {
         signedUserName: action.response.data.name,
         signedUserEmail: action.response.data.email,
         signedUserId: action.response.data._id,
+        signUpError: null,
       };
-    case 'SIGNIN':
+    case 'SIGNUP_ERROR':
       return {
         ...state,
+        signUpError: action.response.data.errors[0],
+      };
+    case 'LOGIN_SUCCESS':
+      console.log(action.response);
+      return {
+        ...state,
+        signedUserEmail: action.response.data.user.email,
+        signedUserId: action.response.data.user._id,
+        signedUserName: action.response.data.user.name,
+        signedUserToken: action.response.data.token,
+      };
+    case 'LOGIN_ERROR':
+      return {
+        ...state,
+        signInError: action.response.data.message,
+      };
+    case 'SIGNOUT':
+      return {
+        ...initState,
       };
     default:
       return {

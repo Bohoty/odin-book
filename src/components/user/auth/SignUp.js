@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { signUp } from '../../../store/actions/userActions/authActions';
+import { signIn } from '../../../store/actions/userActions/authActions';
 
 class SignUp extends Component {
   state = {
@@ -11,11 +13,26 @@ class SignUp extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    this.props.signUp(this.state);
+    await this.props.signUp(this.state);
+    await this.props.signIn({
+      email: this.state.email,
+      password: this.state.password,
+    });
   };
   render() {
+    const token = this.props.state.auth.signedUserToken;
+    const loggedIn = token !== null;
+    if (loggedIn) return <Redirect to='/' />;
+    const err = this.props.state.auth.signUpError;
+    const errorMsg = err ? (
+      <div>
+        <div className='center red-text'>
+          {this.props.state.auth.signUpError}
+        </div>
+      </div>
+    ) : null;
     return (
       <div>
         <div className='container'>
@@ -45,6 +62,7 @@ class SignUp extends Component {
                 </div>
                 <button className='btn green lighten-1'>Sign Up</button>
               </form>
+              {errorMsg}
             </div>
           </div>
         </div>
@@ -56,11 +74,12 @@ class SignUp extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     signUp: (user) => dispatch(signUp(user)),
+    signIn: (user) => dispatch(signIn(user)),
   };
 };
 const mapStateToProps = (state) => {
   return {
     state,
-  }
-}
+  };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

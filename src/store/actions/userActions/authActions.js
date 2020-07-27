@@ -9,16 +9,29 @@ const getResponse = (url, user) => {
     },
     data: data,
   };
+  console.log(config);
   return axios(config);
 };
 
 export const signIn = (user) => {
   return async (dispatch, getState) => {
-    // connect to the backend here
-    // if done correctly dispatch()
-    const url = 'teez m7mod';
-    const stringResponse = await getResponse(url, user);
-    const response = stringResponse.json().body;
+    const url = 'https://cool-odin-book.herokuapp.com/login';
+    let response;
+    try {
+      response = await getResponse(url, user);
+    } catch (err) {
+      response = err.response;
+    }
+    switch (response.status) {
+      case 200:
+        dispatch({ type: 'LOGIN_SUCCESS', response });
+        break;
+      case 400:
+        dispatch({ type: 'LOGIN_ERROR', response });
+        break;
+      default:
+        dispatch({ type: 'UNDEFIEND' });
+    }
   };
 };
 
@@ -31,15 +44,21 @@ export const signUp = (user) => {
     } catch (err) {
       response = err.response;
     }
-    switch(response.status) {
+    switch (response.status) {
       case 200:
-        dispatch({type: "SIGNUP_SUCCESS", response});
+        dispatch({ type: 'SIGNUP_SUCCESS', response });
         break;
       case 400:
-        dispatch({type: "SIGNUP_ERROR", response});
+        dispatch({ type: 'SIGNUP_ERROR', response });
         break;
       default:
-        dispatch({type: "SIGNUP_UNDEFIEND"});
+        dispatch({ type: 'UNDEFIEND' });
     }
+  };
+};
+
+export const signOut = () => {
+  return async (dispatch, getState) => {
+    dispatch({ type: 'SIGNOUT' });
   };
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../../store/actions/userActions/authActions';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 class SignIn extends Component {
   state = {
     email: '',
@@ -15,6 +15,19 @@ class SignIn extends Component {
     this.props.signIn(this.state);
   };
   render() {
+    console.log(this.props);
+    const token = this.props.state.auth.signedUserToken;
+    const loggedIn = token !== null;
+    if (loggedIn) return <Redirect to='/' />;
+    const err = this.props.state.auth.signInError;
+    console.log(this.props.state);
+    const errorMsg = err ? (
+      <div>
+        <div className='center red-text'>
+          {this.props.state.auth.signInError}
+        </div>
+      </div>
+    ) : null;
     return (
       <div>
         <div className='container'>
@@ -44,6 +57,7 @@ class SignIn extends Component {
                 </div>
                 <button className='btn green lighten-1'>Sign In</button>
               </form>
+              {errorMsg}
               <div className='center'>
                 <p>
                   <Link to='/signup'>or create new account</Link>
@@ -61,4 +75,10 @@ const mapDispatchToProps = (dispatch) => {
     signIn: (user) => dispatch(signIn(user)),
   };
 };
-export default connect(null, mapDispatchToProps)(SignIn);
+
+const mapStateToProps = (state) => {
+  return {
+    state,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
