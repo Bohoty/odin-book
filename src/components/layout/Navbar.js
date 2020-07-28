@@ -2,9 +2,8 @@ import React from 'react';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 function Navbar(props) {
-  console.log(props);
   const token = props.auth.signedUserToken;
   let links;
   if (token) links = <SignedInLinks />;
@@ -14,9 +13,9 @@ function Navbar(props) {
       <div className='nav-wrapper green lighten-1'>
         <div className='container'>
           <div className=''>
-            <a href='#' className='brand-logo offset-l2'>
+            <Link to='/' className='brand-logo offset-l2'>
               Odinbook
-            </a>
+            </Link>
           </div>
           <div className='col offset-l2'>{links}</div>
         </div>
