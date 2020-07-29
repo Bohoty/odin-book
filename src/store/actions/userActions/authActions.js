@@ -9,7 +9,6 @@ const getResponse = (url, user) => {
     },
     data: data,
   };
-  console.log(config);
   return axios(config);
 };
 

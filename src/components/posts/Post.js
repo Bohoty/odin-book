@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LikesListModal from './LikesListModal';
+// import moment from 'moment';
 
 class Post extends Component {
   state = {
@@ -56,24 +57,15 @@ class Post extends Component {
               <div className='row'>
                 <div className='card-title black-text col s9'>
                   <div>
-                    <span>Someone</span>
+                    <span>{this.props.authorName}</span>
                   </div>
                   <p className='grey-text' Style='font-size:15px;'>
-                    posted on Monday at 12:55 am
+                    Posted {this.props.createdAt}
                   </p>
                 </div>
               </div>
 
-              <p Style='font-size: 18px;'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptas commodi, optio dolorum omnis alias, ipsum voluptatum ex
-                deserunt aliquid facere molestias exercitationem quisquam a
-                harum, laborum ullam sit architecto. Tenetur. Lorem ipsum dolor,
-                sit amet consectetur adipisicing elit. Ad tenetur, natus
-                possimus dolore sequi, animi nam est, id quam dolores soluta.
-                Dolorem, quod! Distinctio quidem dignissimos numquam quisquam
-                laudantium et.
-              </p>
+              <p Style='font-size: 18px;'>{this.props.content}</p>
               <div className='right'>
                 <a onClick={this.openLikesList} href='#'>
                   <span Style='font-size:14px' className='grey-text lighten-1'>

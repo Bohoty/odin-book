@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { signOut } from '../../store/actions/userActions/authActions';
 function SignedInLinks(props) {
   const handleClick = async (e) => {
+    e.preventDefault();
     await props.signOut();
     window.location.reload(false);
   };
@@ -11,18 +12,20 @@ function SignedInLinks(props) {
     <div>
       <ul id='nav-mobile' className='right hide-on-med-and-down'>
         <li>
-          <Link onClick={handleClick}>Sign Out</Link>
+          <Link to='#' onClick={handleClick}>
+            Sign Out
+          </Link>
         </li>
       </ul>
 
       <ul id='slide-out' className='sidenav'>
         <li>
-          <Link className='sidenav-close' onClick={handleClick}>
+          <Link to='#' className='sidenav-close' onClick={handleClick}>
             Sign Out
           </Link>
         </li>
       </ul>
-      <a href='#' data-target='slide-out' className='sidenav-trigger'>
+      <a href='/' data-target='slide-out' className='sidenav-trigger'>
         <i className='material-icons'>menu</i>
       </a>
     </div>

@@ -59,19 +59,19 @@ function LikesListModal(props) {
           </span>
           <hr Style='opacity: 0.5;'></hr>
           <div Style='font-size:20px'>
-            <a href='#' className=' indigo-text darken-4'>
+            <a href='/' className=' indigo-text darken-4'>
               bullshit
             </a>
             <br />
-            <a href='#' className='indigo-text darken-4'>
+            <a href='/' className='indigo-text darken-4'>
               bullshit
             </a>
             <br />
-            <a href='#' className='indigo-text darken-4'>
+            <a href='/' className='indigo-text darken-4'>
               bullshit
             </a>
             <br />
-            <a href='#' className='indigo-text darken-4'>
+            <a href='/' className='indigo-text darken-4'>
               bullshit
             </a>
             <br />
