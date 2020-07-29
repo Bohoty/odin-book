@@ -12,7 +12,14 @@ function SignedOutLinks() {
         </li>
       </ul>
 
-      <ul id='slide-out' className='sidenav'></ul>
+      <ul id='slide-out' className='sidenav'>
+        <li>
+          <Link to='/signin' className="sidenav-close">Sign In</Link>
+        </li>
+        <li>
+          <Link to='/signup' className="sidenav-close">Sign Up</Link>
+        </li>
+      </ul>
       <a href='#' data-target='slide-out' className='sidenav-trigger'>
         <i className='material-icons'>menu</i>
       </a>

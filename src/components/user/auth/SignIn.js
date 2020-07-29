@@ -10,9 +10,10 @@ class SignIn extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    this.props.signIn(this.state);
+    await this.props.signIn(this.state);
+    window.location.reload(false);
   };
   render() {
     console.log(this.props);

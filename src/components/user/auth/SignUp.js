@@ -20,6 +20,7 @@ class SignUp extends Component {
       email: this.state.email,
       password: this.state.password,
     });
+    window.location.reload(false);
   };
   render() {
     const token = this.props.state.auth.signedUserToken;

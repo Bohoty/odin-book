@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import ViewLikes from './ViewLikes';
+import LikesListModal from './LikesListModal';
 
 class Post extends Component {
   state = {
-    likeButtonColor: 'grey-text lighten-text-1',
+    likeButtonColor: 'grey-text text-lighten-1',
     likeButtonState: 'Like',
     modalIsOpen: false,
     commentContent: '',
@@ -15,9 +15,9 @@ class Post extends Component {
     e.preventDefault();
     this.setState({
       likeButtonColor:
-        this.state.likeButtonColor === 'grey-text lighten-text-1'
-          ? 'green-text'
-          : 'grey-text lighten-text-1',
+        this.state.likeButtonColor === 'grey-text text-lighten-1'
+          ? 'green-text text-lighten-1'
+          : 'grey-text text-lighten-1',
       likeButtonState:
         this.state.likeButtonState === 'Like' ? 'Unlike' : 'Like',
     });
@@ -30,14 +30,14 @@ class Post extends Component {
     });
   };
 
-  openModal = () => {
+  openLikesList = () => {
     this.setState({
-      modalIsOpen: true,
+      likesListIsOpen: true,
     });
   };
-  closeModal = () => {
+  closeLikesList = () => {
     this.setState({
-      modalIsOpen: false,
+      likesListIsOpen: false,
     });
   };
 
@@ -56,7 +56,7 @@ class Post extends Component {
               <div className='row'>
                 <div className='card-title black-text col s9'>
                   <div>
-                    <span>Mahmod Abo Neka</span>
+                    <span>Someone</span>
                   </div>
                   <p className='grey-text' Style='font-size:15px;'>
                     posted on Monday at 12:55 am
@@ -74,7 +74,20 @@ class Post extends Component {
                 Dolorem, quod! Distinctio quidem dignissimos numquam quisquam
                 laudantium et.
               </p>
+              <div className='right'>
+                <a onClick={this.openLikesList} href='#'>
+                  <span Style='font-size:14px' className='grey-text lighten-1'>
+                    12 likes &nbsp;&nbsp;
+                  </span>
+                </a>
+                <a href=''>
+                  <span Style='font-size:14px' className='grey-text lighten-1'>
+                    8 comments
+                  </span>
+                </a>
+              </div>
             </div>
+
             <div className='card-action' Style=''>
               <a
                 href='#'
@@ -122,7 +135,7 @@ class Post extends Component {
                   ></button>
                   <button
                     Style='text-transform: none'
-                    className='btn-small   right'
+                    className='btn-small   right green lighten-1'
                   >
                     Comment
                   </button>
@@ -132,9 +145,9 @@ class Post extends Component {
           </div>
         </div>
 
-        <ViewLikes
-          isOpen={this.state.modalIsOpen}
-          closeModal={this.closeModal}
+        <LikesListModal
+          isOpen={this.state.likesListIsOpen}
+          closeModal={this.closeLikesList}
         />
       </div>
     );
