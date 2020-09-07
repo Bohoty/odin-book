@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Post from './Post';
 import Moment from 'react-moment';
-import { getAllPosts } from '../../store/actions/postsAction';
-export class PostsList extends Component {
+export default class PostsList extends Component {
   render() {
-    this.props.getAllPosts();
     const posts = this.props.posts;
     const calendarStrings = {
       lastDay: '[Yesterday at] LT',
@@ -33,16 +30,4 @@ export class PostsList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    posts: state.post.posts,
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getAllPosts: () => dispatch(getAllPosts()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostsList);

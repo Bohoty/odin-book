@@ -22,7 +22,8 @@ const authReducer = (state = initState, action) => {
         signUpError: action.response.data.errors[0],
       };
     case 'LOGIN_SUCCESS':
-      console.log(action.response);
+      // console.log(action.response.data.token);
+      // alert(action.response.data.token);
       return {
         ...state,
         signedUserEmail: action.response.data.user.email,

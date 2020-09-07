@@ -16,12 +16,10 @@ class SignIn extends Component {
     window.location.reload(false);
   };
   render() {
-    console.log(this.props);
     const token = this.props.state.auth.signedUserToken;
     const loggedIn = token !== null;
     if (loggedIn) return <Redirect to='/' />;
     const err = this.props.state.auth.signInError;
-    console.log(this.props.state);
     const errorMsg = err ? (
       <div>
         <div className='center red-text'>
