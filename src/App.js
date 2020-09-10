@@ -7,7 +7,7 @@ import Home from './components/Home';
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import UserProfile from './components/user/user profile/UserProfile';
-
+import AuthContextProvider from './contexts/AuthContext';
 class App extends Component {
   componentDidMount() {
     let sidenav = document.querySelector('#slide-out');
@@ -15,17 +15,19 @@ class App extends Component {
   }
   render() {
     return (
-      <BrowserRouter>
-        <div className='App'>
-          <Navbar />
-        </div>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/SignIn' component={SignIn} />
-          <Route exact path='/SignUp' component={SignUp} />
-          <Route exact path='/UserProfile/:userID' component={UserProfile} />
-        </Switch>
-      </BrowserRouter>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <div className='App'>
+            <Navbar />
+          </div>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/SignIn' component={SignIn} />
+            <Route exact path='/SignUp' component={SignUp} />
+            <Route exact path='/UserProfile/:userID' component={UserProfile} />
+          </Switch>
+        </BrowserRouter>
+      </AuthContextProvider>
     );
   }
 }
