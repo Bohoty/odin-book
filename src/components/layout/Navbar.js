@@ -1,11 +1,11 @@
-import React from 'react';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 export default function Navbar() {
   const authContext = useContext(AuthContext);
+  console.log(authContext.state);
   const links = authContext.state.signedUserToken ? <SignedInLinks /> : <SignedOutLinks />;
   return (
     <nav>

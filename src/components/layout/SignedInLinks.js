@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signOut } from '../../store/actions/userActions/authActions';
-function SignedInLinks(props) {
-  const handleClick = async (e) => {
+import { signOut } from '../user/auth/authActions';
+import { AuthContext } from '../../contexts/AuthContext';
+
+
+export default function SignedInLinks() {
+  const authContext = useContext(AuthContext);
+  const handleClick = (e) => {
     e.preventDefault();
-    await props.signOut();
+    const newState = signOut();
+    authContext.setState(newState);
     window.location.reload(false);
   };
   return (
@@ -32,9 +36,3 @@ function SignedInLinks(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signOut: () => dispatch(signOut()),
-  };
-};
-export default connect(null, mapDispatchToProps)(SignedInLinks);

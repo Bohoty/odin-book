@@ -45,7 +45,7 @@ export async function signUp(user) {
 
     switch (response.status) {
         case 200:
-            state = authReducer(null, {type: 'SIGNUP_SUCCESS', response });
+            state = authReducer(null, { type: 'SIGNUP_SUCCESS', response });
             break;
         case 400:
             state = authReducer(null, { type: 'SIGNUP_ERROR', response });
@@ -54,5 +54,10 @@ export async function signUp(user) {
             state = authReducer(null, { type: 'UNDEFIEND' });
     }
 
+    return state;
+}
+
+export function signOut() {
+    const state = authReducer(null, { type: 'SIGNOUT' });
     return state;
 }
