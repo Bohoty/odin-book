@@ -5,7 +5,6 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 export default function Navbar() {
   const authContext = useContext(AuthContext);
-  console.log(authContext.state);
   const links = authContext.state.signedUserToken ? <SignedInLinks /> : <SignedOutLinks />;
   return (
     <nav>
