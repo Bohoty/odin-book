@@ -1,13 +1,12 @@
 import React from 'react';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-function Navbar(props) {
-  const token = props.auth.signedUserToken;
-  let links;
-  if (token) links = <SignedInLinks />;
-  else links = <SignedOutLinks />;
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+export default function Navbar() {
+  const authContext = useContext(AuthContext);
+  const links = authContext.state.signedUserToken ? <SignedInLinks /> : <SignedOutLinks />;
   return (
     <nav>
       <div className='nav-wrapper green lighten-1'>
@@ -23,10 +22,3 @@ function Navbar(props) {
     </nav>
   );
 }
-
-const mapStateTpProps = (state) => {
-  return {
-    ...state,
-  };
-};
-export default connect(mapStateTpProps)(Navbar);
