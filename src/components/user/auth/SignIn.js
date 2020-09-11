@@ -3,11 +3,11 @@ import { signIn } from './authActions';
 import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 
-function SignIn() {
+const SignIn = () => {
   const authContext = useContext(AuthContext);
-  
   const err = authContext.state.signInError;
   const token = authContext.state.signedUserToken;
+
   const initialState = {
     email: '',
     password: '',
@@ -21,10 +21,9 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newState = await signIn(state);
-    authContext.setState(newState);
+    authContext.setState({ ...authContext.state, ...newState });
   };
 
-  if (token) return <Redirect to='/' />;
 
   const errorMsg = err ? (
     <div>
@@ -33,47 +32,49 @@ function SignIn() {
       </div>
     </div>
   ) : <span></span>;
-
-  return (
-    <div>
-      <div className='container'>
-        <div className='card z-depth-1'>
-          <div className='card-title'>
-            <h4 Style='position:relative; left: 22px; top:22px'>Sign In</h4>
-          </div>
-          <div className='card-content'>
-            <form onSubmit={handleSubmit}>
-              <div className='input-field'>
-                <label htmlFor='email'>Email</label>
-                <input
-                  required
-                  id='email'
-                  type='email'
-                  onChange={handleChange}
-                />
+  if (authContext.state.localStorageHasLoaded) {
+    if (token) return <Redirect to='/' />;
+    return (
+      <div>
+        <div className='container'>
+          <div className='card z-depth-1'>
+            <div className='card-title'>
+              <h4 Style='position:relative; left: 22px; top:22px'>Sign In</h4>
+            </div>
+            <div className='card-content'>
+              <form onSubmit={handleSubmit}>
+                <div className='input-field'>
+                  <label htmlFor='email'>Email</label>
+                  <input
+                    required
+                    id='email'
+                    type='email'
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='input-field'>
+                  <label htmlFor='password'>Password</label>
+                  <input
+                    required
+                    id='password'
+                    type='password'
+                    onChange={handleChange}
+                  />
+                </div>
+                <button className='btn green lighten-1'>Sign In</button>
+              </form>
+              {errorMsg}
+              <div className='center'>
+                <p>
+                  <Link to='/signup'>or create new account</Link>
+                </p>
               </div>
-              <div className='input-field'>
-                <label htmlFor='password'>Password</label>
-                <input
-                  required
-                  id='password'
-                  type='password'
-                  onChange={handleChange}
-                />
-              </div>
-              <button className='btn green lighten-1'>Sign In</button>
-            </form>
-            {errorMsg}
-            <div className='center'>
-              <p>
-                <Link to='/signup'>or create new account</Link>
-              </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-
+    );
+  }
+  else return null;
 }
 export default SignIn;

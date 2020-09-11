@@ -19,10 +19,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const getDataFromLocalStorage = () => {
+    const getDataFromLocalStorage = async () => {
       const state = localStorage.getItem("authData");
       if (state)
-        authContext.setState(JSON.parse(state));
+        authContext.setState({ ...JSON.parse(state), localStorageHasLoaded: true });
+      else authContext.setState({ ...authContext.state, localStorageHasLoaded: true });
     }
     getDataFromLocalStorage();
   }, []);
