@@ -37,23 +37,22 @@ export async function signIn(user) {
     return state;
 }
 
-// export async function signUp(user) {
-//     const authContext = useContext(AuthContext);
-//     const [state, dispatch] = useReducer(authReducer);
+export async function signUp(user) {
+    let state;
 
-//     const url = "https://cool-odin-book.herokuapp.com/users";
-//     const response = await postData(url, user);
+    const url = "https://cool-odin-book.herokuapp.com/users";
+    const response = await postData(url, user);
 
-//     switch (response.status) {
-//         case 200:
-//             dispatch({ type: 'SIGNUP_SUCCESS', response });
-//             authContext.setState(state);
-//             break;
-//         case 400:
-//             dispatch({ type: 'SIGNUP_ERROR', response });
-//             authContext.setState(state);
-//             break;
-//         default:
-//             dispatch({ type: 'UNDEFIEND' });
-//     }
-// }
+    switch (response.status) {
+        case 200:
+            state = authReducer(null, {type: 'SIGNUP_SUCCESS', response });
+            break;
+        case 400:
+            state = authReducer(null, { type: 'SIGNUP_ERROR', response });
+            break;
+        default:
+            state = authReducer(null, { type: 'UNDEFIEND' });
+    }
+
+    return state;
+}

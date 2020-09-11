@@ -4,8 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 
 function SignIn() {
-  const authContext = useContext(AuthContext)
-  console.log(authContext);
+  const authContext = useContext(AuthContext);
   
   const err = authContext.state.signInError;
   const token = authContext.state.signedUserToken;

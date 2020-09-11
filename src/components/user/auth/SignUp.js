@@ -1,86 +1,82 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { signUp } from '../../../store/actions/userActions/authActions';
-import { signIn } from '../../../store/actions/userActions/authActions';
-
-class SignUp extends Component {
-  state = {
+import { signIn, signUp } from './authActions'
+import { AuthContext } from '../../../contexts/AuthContext'
+export default function SignUp() {
+  const authContext = useContext(AuthContext);
+  const token = authContext.state.signedUserToken;
+  const err = authContext.state.signUpError;
+  const initialState = {
     name: '',
     email: '',
     password: '',
   };
-  handleChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+  const [state, setState] = useState(initialState)
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.id]: e.target.value })
   };
-  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await this.props.signUp(this.state);
-    await this.props.signIn({
-      email: this.state.email,
-      password: this.state.password,
-    });
+    const signUpState = await signUp(state);
+    authContext.setState(signUpState);
+    let newState;
+    if (signUpState.signUpError === null) {
+      newState = await signIn({
+        email: state.email,
+        password: state.password,
+      });
+      authContext.setState(newState);
+    }
     window.location.reload(false);
   };
-  render() {
-    const token = this.props.state.auth.signedUserToken;
-    const loggedIn = token !== null;
-    if (loggedIn) return <Redirect to='/' />;
-    const err = this.props.state.auth.signUpError;
-    const errorMsg = err ? (
-      <div>
-        <div className='center red-text'>
-          {this.props.state.auth.signUpError}
-        </div>
+
+  if (token)
+    return <Redirect to='/' />;
+
+  const errorMsg = err ? (
+    <div>
+      <div className='center red-text'>
+        {this.props.state.auth.signUpError}
       </div>
-    ) : null;
-    return (
-      <div>
-        <div className='container'>
-          <div className='card'>
-            <div className='card-title'>
-              <h4 Style='position:relative; left: 22px; top:22px'>
-                Create New Account
+    </div>
+  ) : <span></span>;
+
+
+  return (
+    <div>
+      <div className='container'>
+        <div className='card'>
+          <div className='card-title'>
+            <h4 Style='position:relative; left: 22px; top:22px'>
+              Create New Account
               </h4>
-            </div>
-            <div className='card-content'>
-              <form onSubmit={this.handleSubmit}>
-                <div className='input-field'>
-                  <label htmlFor='name'>Name</label>
-                  <input id='name' type='text' onChange={this.handleChange} />
-                </div>
-                <div className='input-field'>
-                  <label htmlFor='email'>Email</label>
-                  <input id='email' type='email' onChange={this.handleChange} />
-                </div>
-                <div className='input-field'>
-                  <label htmlFor='password'>Password</label>
-                  <input
-                    id='password'
-                    type='password'
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <button className='btn green lighten-1'>Sign Up</button>
-              </form>
-              {errorMsg}
-            </div>
+          </div>
+          <div className='card-content'>
+            <form onSubmit={handleSubmit}>
+              <div className='input-field'>
+                <label htmlFor='name'>Name</label>
+                <input id='name' type='text' onChange={handleChange} />
+              </div>
+              <div className='input-field'>
+                <label htmlFor='email'>Email</label>
+                <input id='email' type='email' onChange={handleChange} />
+              </div>
+              <div className='input-field'>
+                <label htmlFor='password'>Password</label>
+                <input
+                  id='password'
+                  type='password'
+                  onChange={handleChange}
+                />
+              </div>
+              <button className='btn green lighten-1'>Sign Up</button>
+            </form>
+            {errorMsg}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signUp: (user) => dispatch(signUp(user)),
-    signIn: (user) => dispatch(signIn(user)),
-  };
-};
-const mapStateToProps = (state) => {
-  return {
-    state,
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
