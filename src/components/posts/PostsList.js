@@ -12,20 +12,21 @@ export default class PostsList extends Component {
       nextWeek: 'dddd [at] LT',
       sameElse: 'L',
     };
-    const postsList =
-      posts &&
-      posts.map((post) => {
-        return (
-          <Post
-            key={post._id}
-            authorName={post.user.name}
-            createdAt={
-              <Moment calendar={calendarStrings}>{post.createdAt}</Moment>
-            }
-            content={post.text}
-          />
-        );
-      });
+    let postsList = null;
+    if (posts)
+      postsList =
+        posts.map((post) => {
+          return (
+            <Post
+              key={post._id}
+              authorName={post.user.name}
+              createdAt={
+                <Moment calendar={calendarStrings}>{post.createdAt}</Moment>
+              }
+              content={post.text}
+            />
+          );
+        });
     return <div>{postsList}</div>;
   }
 }
