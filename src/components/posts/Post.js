@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import LikesListModal from './LikesListModal';
 
-class Post extends Component {
+export default class Post extends Component {
   state = {
     likeButtonColor: 'grey-text text-lighten-1',
     likeButtonState: 'Like',
@@ -145,8 +144,3 @@ class Post extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
