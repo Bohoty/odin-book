@@ -9,7 +9,7 @@ export default function SignedInLinks() {
   const handleClick = (e) => {
     e.preventDefault();
     const newState = signOut();
-    authContext.setState(newState);
+    authContext.setState({ ...newState, rememberMe: true });
     window.location.reload(false);
   };
   return (

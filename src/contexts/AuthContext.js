@@ -17,7 +17,8 @@ export default function AuthContextProvider(props) {
         const saveAuthDataIntoLocalStorage = () => {
             const tempState = state;
             tempState.signInError = tempState.signInError = null;
-            localStorage.setItem("authData", JSON.stringify(tempState));
+            if (tempState.rembmerMe)
+                localStorage.setItem("authData", JSON.stringify(tempState));
         }
         saveAuthDataIntoLocalStorage();
     })
