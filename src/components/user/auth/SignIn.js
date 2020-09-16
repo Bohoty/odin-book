@@ -16,16 +16,9 @@ import { signIn } from './authActions';
 import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import Home from '../../Home';
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            Eltabba Limited Company {' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import Copyright from '../../layout/Copyright';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -84,77 +77,80 @@ export default function SignIn(props) {
         null;
     const passwordErrorMessage = err && authContext.state.signInError === 'Incorrect password' ? 'Incorrect Password' :
         null;
-    if (token) return <Redirect to={Home} />;
-    return (
-        <Container component="main" maxWidth="xs">
+    if (authContext.state.localStorageHasLoaded) {
+        if (token) return <Redirect to={Home} />;
+        return (
+            <Container component="main" maxWidth="xs">
 
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
         </Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        onChange={handleChange}
-                        error={emailErrorMessage !== null}
-                        helperText={emailErrorMessage}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={handleChange}
-                        error={passwordErrorMessage !== null}
-                        helperText={passwordErrorMessage}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" onChange={handleCheckBox} />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
+                    <form className={classes.form} onSubmit={handleSubmit}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            onChange={handleChange}
+                            error={emailErrorMessage !== null}
+                            helperText={emailErrorMessage}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            onChange={handleChange}
+                            error={passwordErrorMessage !== null}
+                            helperText={passwordErrorMessage}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" onChange={handleCheckBox} />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign In
           </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                    Forgot password?
               </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link component={RouterLink} to='/SignUp' variant="body2">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            <Box mt={8}>
-                <Copyright />
-            </Box>
-        </Container>
-    );
+                    </form>
+                </div>
+                <Box mt={8}>
+                    <Copyright />
+                </Box>
+            </Container>
+        );
+    }
+    return <></>;
 }
