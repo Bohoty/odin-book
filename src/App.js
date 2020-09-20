@@ -8,10 +8,14 @@ import UserProfile from './components/user/user profile/UserProfile';
 import { useEffect, useContext, useState } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import theme from './myDefaultTheme';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+// import tmp from './tmp';
+import DesktopDrawer from './components/layout/DesktopDrawer';
+
 
 export default function App() {
+
   const authContext = useContext(AuthContext);
   const [inProgress, setInProgress] = useState(false);
   useEffect(() => {
@@ -25,12 +29,12 @@ export default function App() {
   }, []);
 
   return (
-
-    <BrowserRouter>
+    < BrowserRouter >
       <ThemeProvider theme={theme}>
-        <div className='App'>
-          {inProgress ? <LinearProgress /> : <></>}
-          {/* <Navbar /> */}
+        <div>
+          {inProgress ? <LinearProgress color='secondary' /> : <></>}
+          <Navbar />
+          {/* <DesktopDrawer /> */}
         </div>
         <Switch>
           <Route exact path='/' component={Home} />
@@ -38,6 +42,8 @@ export default function App() {
             render={(props) => (<SignIn {...props} setProgressBarStatus={setInProgress} />)} />
           <Route exact path='/SignUp' component={SignUp} />
           <Route exact path='/UserProfile/:userID' component={UserProfile} />
+          {/* <Route exact path='/tmp' component={tmp} /> */}
+
         </Switch>
       </ThemeProvider>
     </BrowserRouter>
