@@ -1,6 +1,6 @@
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,15 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/core/styles'
-import { Hidden, SvgIcon } from '@material-ui/core';
+import { Hidden, SvgIcon, Button } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import EmailIcon from '@material-ui/icons/Email';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DesktopDrawer from './DesktopDrawer';
 // import Link from '@material-ui/core/Link'
 import { Link } from 'react-router-dom';
-import Home from '../Home'
+import Drawer from './Drawer'
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   title: {
@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     right: '1%'
   },
   icon1: {
+
   },
   icon2: {
     position: 'absolute',
@@ -96,20 +97,41 @@ function ElevationScroll(props) {
     elevation: trigger ? 4 : 0,
   });
 }
-
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const authContext = useContext(AuthContext);
-  const links = authContext.state.signedUserToken ? <SignedInLinks /> : <SignedOutLinks />;
+  const token = authContext.state.signedUserToken;
+
+  const icons = token ? (
+    <>
+      <Hidden mdUp>
+        <div className={classes.iconList}>
+          <SearchIcon className={classes.icon5} fontSize='' />
+          <NotificationsIcon className={classes.icon4} fontSize='' />
+          <EmailIcon className={classes.icon3} fontSize='' />
+          <PeopleAltIcon className={classes.icon2} fontSize='' />
+          <MoreVertIcon className={classes.icon1} fontSize='' onClick={() => setOpen(true)} />
+        </div>
+      </Hidden>
+      <Hidden smDown>
+        <div className={classes.iconList}>
+          <SearchIcon className={classes.icon4} fontSize='' />
+          <NotificationsIcon className={classes.icon3} fontSize='' />
+          <EmailIcon className={classes.icon2} fontSize='' />
+          <PeopleAltIcon className={classes.icon1} fontSize='' />
+        </div>
+      </Hidden>
+    </>
+  ) : null;
+
   return (
     <div className={classes.grow}>
       <React.Fragment>
         <CssBaseline />
         <div className={classes.StrictHeight}>
-
           <ElevationScroll>
-
-            <AppBar className={classes.AppBar} position="static">
+            <AppBar className={classes.AppBar}>
               <Toolbar className={classes.ToolBar}>
                 <Link to='/' className={classes.Link}>
                   <SvgIcon className={classes.IconBox} fontSize="large" viewBox="0 0 100 100">
@@ -119,27 +141,11 @@ export default function Navbar() {
                     <Typography className={classes.title} variant="h5">Odinbook</Typography>
                   </Hidden>
                 </Link>
-                <Hidden mdUp>
-                  <div className={classes.iconList}>
-                    <SearchIcon className={classes.icon5} fontSize='' />
-                    <NotificationsIcon className={classes.icon4} fontSize='' />
-                    <EmailIcon className={classes.icon3} fontSize='' />
-                    <PeopleAltIcon className={classes.icon2} fontSize='' />
-                    <MoreVertIcon className={classes.icon1} fontSize='' />
-                  </div>
-                </Hidden>
-                <Hidden smDown>
-                  <div className={classes.iconList}>
-                    <SearchIcon className={classes.icon4} fontSize='' />
-                    <NotificationsIcon className={classes.icon3} fontSize='' />
-                    <EmailIcon className={classes.icon2} fontSize='' />
-                    <PeopleAltIcon className={classes.icon1} fontSize='' />
-                  </div>
-                </Hidden>
+                {icons}
               </Toolbar>
-              <DesktopDrawer />
             </AppBar>
           </ElevationScroll>
+          <Drawer token={token} open={open} setOpen={setOpen} />
         </div>
       </React.Fragment>
     </div >

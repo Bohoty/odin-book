@@ -13,7 +13,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import { Hidden } from '@material-ui/core';
 import { AuthContext } from '../../contexts/AuthContext'
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,12 +31,11 @@ const useStyles = makeStyles((theme) => ({
     drawerContainer: {
         overflow: 'auto',
     },
-    ToolBar: {
-        height: '47px',
-    }
+
 }));
 
-const DesktopDrawer = () => {
+const DesktopDrawer = (props) => {
+    const items = props.items;
     const authContext = useContext(AuthContext);
     const token = authContext.state.signedUserToken;
     const classes = useStyles();
@@ -56,11 +55,7 @@ const DesktopDrawer = () => {
                     >
                         <Toolbar className={classes.Toolbar} />
                         <div className={classes.drawerContainer}>
-                            <Button className={classes.zobrIndex}>Zeby manga</Button>
-                            <Button>Zeby manga</Button>
-                            <Button>Zeby manga</Button>
-                            <Button>Zeby manga</Button>
-                            <Button>Zeby manga</Button>
+                            {items}
                         </div>
                     </Drawer>
 

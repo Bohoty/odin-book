@@ -19,7 +19,7 @@ import Home from '../../Home';
 import Copyright from '../../layout/Copyright';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Paper, Card, CardContent } from '@material-ui/core'
+import { Card, CardContent } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),

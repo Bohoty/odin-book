@@ -8,10 +8,10 @@ import UserProfile from './components/user/user profile/UserProfile';
 import { useEffect, useContext, useState } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import theme from './myDefaultTheme';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 // import tmp from './tmp';
-import DesktopDrawer from './components/layout/DesktopDrawer';
+import Signout from './components/user/auth/Signout';
 
 
 export default function App() {
@@ -41,6 +41,7 @@ export default function App() {
           <Route exact path='/SignIn'
             render={(props) => (<SignIn {...props} setProgressBarStatus={setInProgress} />)} />
           <Route exact path='/SignUp' component={SignUp} />
+          <Route exact path='/Signout' component={Signout} />
           <Route exact path='/UserProfile/:userID' component={UserProfile} />
           {/* <Route exact path='/tmp' component={tmp} /> */}
 
