@@ -14,21 +14,18 @@ export default function PostsList(props) {
   };
   let postsList = null;
   if (posts)
-    postsList =
-      posts.map((post) => {
-        return (
-          <Post
-            key={post._id}
-            authorName={post.user.name}
-            createdAt={
-              <Moment calendar={calendarStrings}>{post.createdAt}</Moment>
-            }
-            content={post.text}
-          />
-        );
-      });
+    postsList = posts.map((post) => {
+      return (
+        <Post
+          key={post._id}
+          authorFirstName={post.user.firstName}
+          authorLastName={post.user.lastName}
+          createdAt={
+            <Moment calendar={calendarStrings}>{post.createdAt}</Moment>
+          }
+          content={post.text}
+        />
+      );
+    });
   return <div>{postsList}</div>;
 }
-
-
-

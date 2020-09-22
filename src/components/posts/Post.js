@@ -1,146 +1,134 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Component } from 'react';
-import LikesListModal from './LikesListModal';
+import React, { useState } from 'react';
+import { Paper, Grid, Avatar, Typography, Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import ThumbUpRoundedIcon from '@material-ui/icons/ThumbUpRounded';
+import CommentIcon from '@material-ui/icons/Comment';
+import ShareIcon from '@material-ui/icons/Share';
+import clsx from 'clsx';
+const useStyles = makeStyles((theme) => ({
+  post: {
+    marginTop: '70px',
+    paddingTop: '10px',
+    paddingBottom: theme.spacing(0.5),
+    paddingLeft: '15px',
+    paddingRight: '15px',
+  },
+  avatar: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    backgroundColor: theme.palette.secondary.dark,
+  },
+  divider: {
+    margin: theme.spacing(2, 0),
+  },
+  postBody: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+  },
+  like: {
+    transform: 'scale(-1, 1)',
+  },
+  postActions: {
+    marginTop: theme.spacing(1),
+  },
+  iconsSize: {
+    fontSize: theme.spacing(3.8),
+  },
+  blueColor: {
+    color: theme.palette.secondary.dark,
+  },
+  likesNumber: {
+    marginRight: '10px',
+  },
+  grey: {
+    color: 'grey',
+  },
+}));
 
-export default class Post extends Component {
-  state = {
-    likeButtonColor: 'grey-text text-lighten-1',
-    likeButtonState: 'Like',
-    modalIsOpen: false,
-    commentContent: '',
-    commentSectionIsOpen: false,
-  };
-  handleLikeClick = (e) => {
-    e.preventDefault();
-    this.setState({
-      likeButtonColor:
-        this.state.likeButtonColor === 'grey-text text-lighten-1'
-          ? 'green-text text-lighten-1'
-          : 'grey-text text-lighten-1',
-      likeButtonState:
-        this.state.likeButtonState === 'Like' ? 'Unlike' : 'Like',
-    });
-  };
-
-  handleNewCommentClick = (e) => {
-    e.preventDefault();
-    this.setState({
-      commentSectionIsOpen: true,
-    });
-  };
-
-  openLikesList = () => {
-    this.setState({
-      likesListIsOpen: true,
-    });
-  };
-  closeLikesList = () => {
-    this.setState({
-      likesListIsOpen: false,
-    });
-  };
-
-  handleCommentChange = (e) => {
-    this.setState({
-      commentContent: e.target.value,
-    });
-  };
-
-  render() {
-    return (
-      <div id='post' className='row'>
-        <div className='col s12 m6 l6 push-l3 push-m3'>
-          <div className='card'>
-            <div className='card-content'>
-              <div className='row'>
-                <div className='card-title black-text col s9'>
-                  <div>
-                    <span>{this.props.authorName}</span>
-                  </div>
-                  <p className='grey-text' Style='font-size:15px;'>
-                    Posted {this.props.createdAt}
-                  </p>
-                </div>
-              </div>
-
-              <p Style='font-size: 18px;'>{this.props.content}</p>
-              <div className='right'>
-                <a onClick={this.openLikesList} href='#'>
-                  <span Style='font-size:14px' className='grey-text lighten-1'>
-                    12 likes &nbsp;&nbsp;
-                  </span>
-                </a>
-                <a href=''>
-                  <span Style='font-size:14px' className='grey-text lighten-1'>
-                    8 comments
-                  </span>
-                </a>
-              </div>
-            </div>
-
-            <div className='card-action' Style=''>
-              <a
-                href='#'
-                className={this.state.likeButtonColor}
-                onClick={this.handleLikeClick}
-                Title={this.state.likeButtonState}
-              >
-                <i
-                  className='material-icons'
-                  onClick={this.handleLikeClick}
-                  Title={this.state.likeButtonState}
-                >
-                  thumb_up
-                </i>
-                <span Style='text-transform: none !important; position:relative; bottom: 5px'>
-                  {' '}
-                  Like
-                </span>
-              </a>
-              <a
-                href='#'
-                className='blue-text lighten-1'
-                onClick={this.handleNewCommentClick}
-              >
-                <i Style='' className='material-icons'>
-                  short_text
-                </i>
-                <span Style='text-transform: none !important; position:relative; bottom: 5px'>
-                  {' '}
-                  Comment
-                </span>
-              </a>
-              {this.state.commentSectionIsOpen ? (
-                <div id='new-comment'>
-                  <textarea
-                    className='materialize-textarea'
-                    name=''
-                    id='commentTextArea'
-                    placeholder='Write a comment...'
-                    onChange={this.handleCommentChange}
-                  ></textarea>
-                  <button
-                    className='btn-small'
-                    Style='visibility:hidden;'
-                  ></button>
-                  <button
-                    Style='text-transform: none'
-                    className='btn-small   right green lighten-1'
+export default function Post(props) {
+  const authorFirstName = props.authorFirstName;
+  const authorLastName = props.authorLastName;
+  const createdAt = props.createdAt;
+  const content = props.content;
+  const [isLiked, setIsLiked] = useState(false);
+  const classes = useStyles();
+  return (
+    <div>
+      <Paper className={classes.post}>
+        <Grid container direction='column' spacing={0}>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Avatar className={classes.avatar}>
+                {authorFirstName[0] + authorLastName[0]}
+              </Avatar>
+            </Grid>
+            <Grid item xs container>
+              <Grid item xs container direction='column' spacing={2}>
+                <Grid item xs>
+                  <Typography variant='h6'>
+                    {authorFirstName + ' ' + authorLastName}
+                  </Typography>
+                  <Typography
+                    variant='body2'
+                    gutterBottom
+                    className={classes.grey}
                   >
-                    Comment
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </div>
-
-        <LikesListModal
-          isOpen={this.state.likesListIsOpen}
-          closeModal={this.closeLikesList}
-        />
-      </div>
-    );
-  }
+                    {createdAt}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid Item>
+            <Typography className={classes.postBody}>{content}</Typography>
+          </Grid>
+          <Grid
+            Item
+            container
+            alignItems='flex-start'
+            justify='flex-end'
+            direction='row'
+          >
+            <Typography
+              variant='body2'
+              className={clsx(classes.likesNumber, classes.grey)}
+            >
+              12 Likes
+            </Typography>
+            <Typography variant='body2' className={classes.grey}>
+              12 Comments
+            </Typography>
+          </Grid>
+          <Grid Item container direction='column'>
+            <Grid Item>
+              <Divider variant='fullWidth' />
+            </Grid>
+            <Grid
+              Item
+              container
+              justify='space-around'
+              className={classes.postActions}
+            >
+              <Grid Item>
+                <ThumbUpRoundedIcon
+                  className={clsx(
+                    classes.like,
+                    classes.iconsSize,
+                    isLiked ? classes.blueColor : null
+                  )}
+                />
+              </Grid>
+              <Grid Item>
+                <CommentIcon className={classes.iconsSize} />
+              </Grid>
+              <Grid Item>
+                <ShareIcon className={classes.iconsSize} />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
+  );
 }
-

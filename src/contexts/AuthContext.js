@@ -6,7 +6,8 @@ import React, {
 export const AuthContext = React.createContext();
 export default function AuthContextProvider(props) {
     const [state, setState] = useState({
-        signedUserName: '',
+        signedUserFirstName: '',
+        signedUserLastName: '',
         signedUserId: '',
         signedUserToken: null,
         signedUserEmail: '',

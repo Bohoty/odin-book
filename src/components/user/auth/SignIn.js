@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     },
     errMsg: {
         color: '#ea0027',
+    },
+    Grid: {
+        marginTop: '80px',
     }
 }));
 
@@ -89,7 +92,7 @@ export default function SignIn(props) {
                 direction="column"
                 alignItems="center"
                 justify="center"
-                style={{ minHeight: '750px' }}
+                className={classes.Grid}
             >
 
                 <Grid item xs={11} md={8} l={6} xl={6}>
