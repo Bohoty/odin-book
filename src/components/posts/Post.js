@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   iconsSize: {
-    fontSize: theme.spacing(3.8),
+    fontSize: theme.spacing(4),
   },
   blueColor: {
     color: theme.palette.secondary.dark,
