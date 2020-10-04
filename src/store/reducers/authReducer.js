@@ -1,5 +1,6 @@
 const initState = {
-  signedUserName: '',
+  signedUserFirstName: '',
+  signedUserLastName: '',
   signedUserId: '',
   signedUserToken: null,
   signedUserEmail: '',
@@ -11,7 +12,8 @@ const authReducer = (state = initState, action) => {
     case 'SIGNUP_SUCCESS':
       return {
         ...state,
-        signedUserName: action.response.data.name,
+        signedUserFirstName: action.response.data.firstName,
+        signedUserLastName: action.response.data.lastName,
         signedUserEmail: action.response.data.email,
         signedUserId: action.response.data._id,
         signUpError: null,
@@ -26,7 +28,8 @@ const authReducer = (state = initState, action) => {
         ...state,
         signedUserEmail: action.response.data.user.email,
         signedUserId: action.response.data.user._id,
-        signedUserName: action.response.data.user.name,
+        signedUserFirstName: action.response.data.firstName,
+        signedUserLastName: action.response.data.lastName,
         signedUserToken: action.response.data.token,
       };
     case 'LOGIN_ERROR':
